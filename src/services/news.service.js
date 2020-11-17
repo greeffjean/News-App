@@ -4,9 +4,6 @@ export function newsService(query, filter) {
   
     const apiKey = `${newsApp.apiKey}`;
 
-    console.log(query)
-    console.log(filter)
-
     var url = 'http://newsapi.org/v2/everything?' +
         `q=${query}&` +
         `from=${filter}&` +
