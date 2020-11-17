@@ -12,25 +12,22 @@
 
 .SearchBar {
   width: 100vw;
-  height: 50vh;
-  padding-bottom: 3%;
+  height: 18vh;
+  padding: 3% 0;
   box-shadow: 0px 20px 26px white;
   display: flex;
   background: hsla(0, 0%, 100%);
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  transition: 500ms;
 }
+
 
 .content-wrapper {
-  width: 40%;
+  width: 60%;
 }
 
-@media screen and (max-width: 1086px) {
-  .content-wrapper {
-    width: 70%;
-  }
-}
 
 .content-headings {
   display: flex;
@@ -54,6 +51,43 @@
   color: pink;
 }
 
+.content-input {
+  display: flex;
+}
+
+
+.MuiTextField-root {
+  width: 100%;
+  margin: 0 1%;
+}
+
+.filter-search-wrapper {
+  display: flex;
+}
+
+html .MuiInput-underline:after {
+  border-bottom: 2px solid pink;
+}
+
+
+html .MuiFormLabel-root.Mui-focused {
+  color: pink
+}
+
+html .MuiButton-contained {
+  margin: 0 10px;
+}
+
+html .MuiButton-contained:hover {
+  background-color: pink;
+}
+
+@media screen and (max-width: 1086px) {
+  .content-wrapper {
+    width: 70%;
+  }
+}
+
 @media screen and (max-width: 1574px) {
   .content-headings h1 {
     font-size: 45px;
@@ -74,28 +108,31 @@
   }
 }
 
-.content-input {
+/* Results */
+
+.circular-progress {
   display: flex;
+  justify-content: center;
+  margin: 15% 0;
 }
 
-
-.MuiTextField-root {
-  width: 100%;
-  margin: 0 1%;
+.articles-wrapper {
+  margin-top: 5%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100vw;
 }
 
-html .MuiInput-underline:after {
-  border-bottom: 2px solid pink;
+html .MuiCardMedia-root {
+height: 150px;
 }
 
-html .MuiFormLabel-root.Mui-focused {
-  color: pink
+html .MuiCard-root {
+width: 40%;
+margin: 1%;
 }
 
-html .MuiButton-contained {
-  margin: 0 10px;
-}
-
-html .MuiButton-contained:hover {
-  background-color: pink;
+html .MuiTypography-body1 {
+  color: hsl(350deg, 95%, 69%);
 }
