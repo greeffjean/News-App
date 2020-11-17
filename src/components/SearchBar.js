@@ -31,21 +31,32 @@ function SearchBar() {
 
     return (
         <div className="SearchBar">
-            <TextField
-                onChange={(e) => handleChange(e)}
-                id="standard-basic"
-                label="Search Headlines"
-                value={searchState.input}
-            />
-            {searchState.searchButton &&
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(e) => handleSubmit(e)}
-                >
-                    Search
-                </Button>
-            }
+
+            <div className="content-wrapper">
+                <div className="content-headings">
+                    <h1>Discover</h1><h2>Headlines</h2>
+                </div>
+
+                <div className="content-input">
+                    <TextField
+                        onChange={(e) => handleChange(e)}
+                        id="standard-basic"
+                        label="Search Headlines"
+                        value={searchState.input}
+                    />
+                    {searchState.searchButton &&
+                        <Button
+                            variant="contained"
+                            onClick={(e) => handleSubmit(e)}
+                        >
+                            Search
+                                </Button>
+                    }
+                </div>
+
+            </div>
+
+
 
         </div>
     )
