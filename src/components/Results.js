@@ -1,19 +1,22 @@
 import React from 'react';
 import { useAppContext } from '../libs/useContext'
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
+import {
+  Button,
+  CircularProgress,
+  Typography,
+  Avatar,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Card
+} from '@material-ui/core';
 
 
 
 function Results() {
-    const { mainState } = useAppContext()
-
+  const { mainState } = useAppContext()
+  
 
 
     return (
@@ -22,12 +25,13 @@ function Results() {
                 <div className="circular-progress">
                     <CircularProgress color="secondary" />
                 </div>
-
             }
 
+        
             {mainState.error &&
                 <Alert severity="error">{mainState.error}</Alert>
-            }
+        }
+        
 
             { mainState.articles &&
 
@@ -38,8 +42,8 @@ function Results() {
                             return <Card>
                                 <CardHeader
                                     avatar={
-                                        <Avatar aria-label="recipe">
-                                            {val.author.charAt(0)}
+                                        <Avatar aria-label="initial">
+                                            {val.author ? val.author.charAt(0) : "N"}
                                         </Avatar>
                                     }
                                     title={val.title}

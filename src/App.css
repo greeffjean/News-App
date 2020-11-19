@@ -10,44 +10,59 @@
 
 /* SearchBar */
 
-.SearchBar {
+
+.search-bar {
   width: 100vw;
   border-radius: 5px;
   padding: 1% 0;
+  height: 40vh;
   display: flex;
-  background: hsl(0deg, 0%, 100%);
+  background: hsl(0deg, 0%, 100%, 83%);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  box-shadow: 0px 4px 31px 28px hsl(0deg, 0%, 100%);
+  box-shadow: 0px 4px 31px 28px hsl(0deg, 0%, 100%, 83%);
+  transition: 500ms;
 }
 
-
-.content-wrapper {
-  width: 80vw;
+.search-bar.active {
+  height: 15vh;
+  transition: 500ms;
+  display: flex;
+  justify-content: flex-start;
 }
 
+.search-bar.active .content-wrapper {
+margin-left: 10vw;
+}
 
 .content-headings {
   display: flex;
   align-items: baseline;
-
 }
 
 .content-headings h1 {
-  font-size: 35px;
+  font-size: 65px;
   color: hsl(0deg 0% 100%);
-  text-shadow: 2px 0 grey, 0 1px grey, -1px 0 grey, 0 -2px grey;
+  text-shadow: 2px 0 grey, 0 2px grey, -1px 0 grey, 0 -2px grey;
   font-family: 'Sonsie One', cursive;
   padding: 0 5px;
   margin: 0;
 }
 
 .content-headings h2 {
-  font-size: 25px;
+  font-size: 40px;
   font-family: 'Sonsie One', cursive;
   margin: 0;
   color: pink;
+}
+
+.search-bar.active h1 {
+  font-size: 45px;
+}
+
+.search-bar.active h2 {
+  font-size: 25px;
 }
 
 .content-input {
@@ -55,8 +70,8 @@
 }
 
 
-html #standard-basic  {
-  width: 440px;
+html .MuiFormControl-root.MuiTextField-root {
+  width: 100%
 }
 
 .filter-search-wrapper {
@@ -84,6 +99,74 @@ html .MuiButton-contained:hover {
   background-color: pink;
 }
 
+.home-options {
+  display: flex;
+  justify-content: center;
+  margin: 3% 0;
+}
+
+.home-options .headlines {
+  background:hsl(350deg, 100%, 85%);
+  padding: 20px 40px;
+  font-size: 15px;
+  color: white;
+}
+
+.home-options .latest {
+  background: white;
+  padding: 20px 40px;
+  font-size: 15px;
+  color: grey;
+}
+
+@media screen and (max-width: 900px) {
+  .content-headings h1 {
+    font-size: 45px;
+  }
+  
+  .content-headings h2 {
+    font-size: 25px;
+  }
+
+  .home-options .headlines {
+    font-size: 14px;
+    padding: 25px;
+  }
+  
+  .home-options .latest {
+    font-size: 14px;
+    padding: 25px;
+  }
+}
+
+@media screen and (max-width: 590px) {
+  .search-bar.active .content-headings h1 {
+    font-size: 30px;
+  }
+  
+  .search-bar.active .content-headings h2 {
+    font-size: 20px;
+  }
+
+   .content-headings h1 {
+    font-size: 30px;
+  }
+  
+   .content-headings h2 {
+    font-size: 20px;
+  }
+
+  .home-options .headlines {
+    font-size: 12px;
+    padding: 15px;
+  }
+  
+  .home-options .latest {
+    font-size: 12px;
+    padding: 15px;
+  }
+}
+
 
 /* Results */
 
@@ -94,12 +177,13 @@ html .MuiButton-contained:hover {
   margin: 8% 0;
 }
 
+
+
 .articles-wrapper {
   width: 80vw;
   margin: 1% auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 html .MuiCardMedia-root {
@@ -108,7 +192,7 @@ html .MuiCardMedia-root {
 
 html .MuiCard-root {
   width: 30%;
-  margin: 1% 0;
+  margin: 1% 1% 1% 0;
 }
 
 html .MuiTypography-body1 {
@@ -119,3 +203,24 @@ html .MuiAlert-standardError {
   width: 80vw;
   margin: 6% auto;
 }
+
+@media screen and (max-width: 1085px) {
+  html .MuiCard-root {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+ 
+  html .MuiCard-root {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 850px) {
+ 
+  html .MuiCard-root {
+    width: 100%;
+  }
+}
+

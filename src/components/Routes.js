@@ -1,6 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
 import Results from './Results';
-import { useAppContext } from '../libs/useContext';
 
 function Routes() {
  

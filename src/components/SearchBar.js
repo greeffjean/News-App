@@ -5,7 +5,7 @@ import {
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { useAppContext } from '../libs/useContext'
-import { newsService } from '../services/news.service'
+import { searchTitles } from '../services/news.service'
 
 function SearchBar() {
 
@@ -18,67 +18,82 @@ function SearchBar() {
         filterDate: ""
     });
 
-  
+
     useEffect(() => {
 
         if (history.location.state) {
-
             handleLoad()
 
-            newsService(
+            searchTitles(
                 history.location.state.params.input,
                 history.location.state.params.filterDate
             ).then(response => {
-            setMainState({
-                articles: response.articles ? response.articles : null,
-                loading: false,
-                error: response.message ? response.message : null
-            })
-        }).catch(error => {
+                setMainState({
+                    articles: response.articles ? response.articles : null,
+                    loading: false,
+                    error: response.message ? response.message : null,
+                    userHasSearched: mainState.userHasSearched
+                })
+            }).catch(error => {
                 console.log(error)
-        })
-    
-            
-        setSearchState({
-            searchButton: false,
-            input: "",
-            filterDate: ""
-        })
+            })
+
+
+            setSearchState({
+                searchButton: false,
+                input: "",
+                filterDate: ""
+            })
+        }
+        else {
+            history.push({
+                pathname: `/`,
+            });
         }
     }, [])
-    
-    
 
-// URL Navigation
+
+
+    // URL Navigation
     window.onpopstate = () => {
 
-        if (history.location.state) {
+        if (history.location.pathname == "/") {
+            setMainState({
+                articles: null,
+                loading: false,
+                error: null,
+                userHasSearched: false
+            })
+        }
+        else {
+
             handleLoad()
 
-            newsService(
+            searchTitles(
                 history.location.state.params.input,
                 history.location.state.params.filterDate
             ).then(response => {
-            setMainState({
-                articles: response.articles ? response.articles : null,
-                loading: false,
-                error: response.message ? response.message : null
+                setMainState({
+                    articles: response.articles ? response.articles : null,
+                    loading: false,
+                    error: response.message ? response.message : null,
+                    userHasSearched: true
+                })
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-           console.log(error)
-    })
-    
-        setSearchState({
-            searchButton: false,
-            input: "",
-            filterDate: ""
-        })
+
+            setSearchState({
+                searchButton: false,
+                input: "",
+                filterDate: ""
+            })
         }
+
     }
-    
 
 
-// Handle Change
+    // Handle Change
     function handleChange(event) {
         const updateInputs = {
             ...searchState,
@@ -98,32 +113,38 @@ function SearchBar() {
     function handleLoad() {
         setMainState({
             articles: null,
-            loading: true
+            loading: true,
+            error: null,
+            userHasSearched: true
         })
     }
 
 
+
     // Handle Submit
-    function handleSubmit() {
+    function handleSubmit(e, term) {
+
         handleLoad()
 
-        newsService(searchState.input, searchState.filterDate).then(response => {
+        searchTitles(term ? term : searchState.input, searchState.filterDate).then(response => {
             console.log(response)
-                history.push({
-                pathname: `/${searchState.input}/${searchState.filterDate}`,
+            history.push({
+                pathname: `/${term ? term : searchState.input}/${searchState.filterDate}`,
                 state: {
                     params: {
-                        input: searchState.input,
+                        input: term ? term : searchState.input,
                         filterDate: searchState.filterDate
-                } }
+                    }
+                }
             });
             setMainState({
                 articles: response.articles ? response.articles : null,
                 loading: false,
-                error: response.message ? response.message : null
+                error: response.message ? response.message : null,
+                userHasSearched: true
             })
         }).catch(error => {
-           console.log(error)
+            console.log(error)
         })
 
         setSearchState({
@@ -135,46 +156,66 @@ function SearchBar() {
 
     return (
 
-        <div className="SearchBar">
+        <div className="search-bar-wrapper">
+            <div className={mainState.userHasSearched ? "search-bar active" : "search-bar"}>
 
-            <div className="content-wrapper">
-                <div className="content-headings">
-                    <h1>Discover</h1><h2>Headlines</h2>
-                </div>
+                <div className="content-wrapper">
+                    <div className="content-headings">
+                        <h1>Discover</h1><h2>Headlines</h2>
+                    </div>
 
-                <div className="content-input">
-                    <TextField
-                        onChange={(e) => handleChange(e)}
-                        id="standard-basic"
-                        name="input"
-                        label="Search Headlines"
-                        value={searchState.input}
-                    />
-                    {searchState.searchButton &&
-                        <div className="filter-search-wrapper">
-                            <TextField
-                                onChange={(e) => handleChange(e)}
-                                id="date"
-                                name="filterDate"
-                                label="Date"
-                                type="date"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
+                    <div className="content-input">
+                        <TextField
+                            onChange={(e) => handleChange(e)}
+                            id="standard-basic"
+                            name="input"
+                            label="Search Headlines"
+                            value={searchState.input}
+                        />
+                        {searchState.searchButton &&
+                            <div className="filter-search-wrapper">
+                                <TextField
+                                    onChange={(e) => handleChange(e)}
+                                    id="date"
+                                    name="filterDate"
+                                    label="Date"
+                                    type="date"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
 
-                            <Button
-                                variant="contained"
-                                onClick={(e) => handleSubmit(e)}
-                            >
-                                Search
+                                <Button
+                                    variant="contained"
+                                    onClick={(e) => handleSubmit(e)}
+                                >
+                                    Search
                                 </Button>
-                        </div>
-                    }
+                            </div>
+                        }
 
+                    </div>
                 </div>
             </div>
 
+            {!mainState.userHasSearched &&
+                <div className="home-options">
+                    <Button
+                        onClick={(e) => handleSubmit(e, "covid")}
+                        className="headlines"
+                        variant="contained"
+                    >
+                        COVID Headlines
+                </Button>
+                    <Button
+                        onClick={(e) => handleSubmit(e, "FIFA")}
+                        className="latest"
+                        variant="contained"
+                    >
+                        FIFA Headlines</Button>
+                </div>
+
+            }
         </div>
     )
 }

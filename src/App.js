@@ -2,22 +2,24 @@ import logo from './logo.svg';
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
 import Routes from './components/Routes';
+import { useHistory } from 'react-router-dom'
 import { AppContext } from './libs/useContext';
-import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
 
 
 
 function App() {
+  const history = useHistory();
+  
   const [mainState, setMainState] = useState({
     articles: null,
     loading: false,
-    error: null
+    error: null,
+    userHasSearched: history.location.state ? true : false
   })
 
 
   return (
-    <Router>
     <AppContext.Provider
       value={{
         mainState,
@@ -29,7 +31,7 @@ function App() {
         <Routes />
       </div>
       </AppContext.Provider>
-      </Router>
+     
   );
 }
 

@@ -1,8 +1,8 @@
 import newsApp from '../config';
 
-export function newsService(query, filter) {
-  
-    const apiKey = `${newsApp.apiKey}`;
+const apiKey = `${newsApp.apiKey}`;
+
+export function searchTitles(query, filter) {
 
     var url = 'http://newsapi.org/v2/everything?' +
         `q=${query}&` +
@@ -17,11 +17,12 @@ export function newsService(query, filter) {
             .then(response => {
                 console.log(response);
                 resolve(response.json())
-                
+
             }).catch(response => {
                 resolve(response)
                 console.log(response)
             })
     })
 }
+
 
