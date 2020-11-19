@@ -2,7 +2,6 @@ import React from 'react';
 import { useAppContext } from '../libs/useContext'
 import Alert from '@material-ui/lab/Alert';
 import {
-  Button,
   CircularProgress,
   Typography,
   Avatar,
@@ -18,21 +17,22 @@ function Results() {
   const { mainState } = useAppContext()
   
 
-
     return (
-        <section>
+      <section>
+        {/* Loading */}
             {mainState.loading &&
                 <div className="circular-progress">
                     <CircularProgress color="secondary" />
                 </div>
             }
 
-        
+          {/* Error Feedback */}
             {mainState.error &&
                 <Alert severity="error">{mainState.error}</Alert>
         }
         
 
+          {/* Articles */}
             { mainState.articles &&
 
                 <div className="articles-wrapper">
@@ -76,45 +76,3 @@ function Results() {
 }
 
 export default Results
-
-
-/*
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
-
-export default function RecipeReviewCard() {
-  const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  return (
-
-  );
-}
-
-*/
