@@ -11,7 +11,12 @@ export function searchTitles(query, filter) {
         `apiKey=${apiKey}`;
 
     return new Promise(resolve => {
-        var req = new Request(url);
+        var req = new Request(url, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`
+            }
+        }
+            );
 
         fetch(req)
             .then(response => {
@@ -24,5 +29,3 @@ export function searchTitles(query, filter) {
             })
     })
 }
-
-
