@@ -9,18 +9,11 @@ You will need a internet connection, Node.js installed on your computer.
 2. Open your Code Editor, open terminal and enter `npm install`.
 ( now you have all the neccessary modules to test and deploy your app )
 
-## Deployment 
-1. Open your Code Editor, open terminal and enter `npm run build`.
-2. Then enter `cd build`.
- ( from the build directory you can stage your website, my personal platform I use is surge.sh )
+## Testing locally
+1. Run `npm run start`
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Deployment Surge
-1. Install the latest version of NodeJS
-2. Install surge `npm install -g surge`
-2. Run `npx surge` from within the build directory, follow the prompts.
-
-## Deployment React
-1. Open your Code Editor, open terminal and enter `npm run start`.
 
 ## Built With 
 Material UI
@@ -32,7 +25,6 @@ News API.
 
 ## Versioning
 `master`
-
 
 ## Authors
 Jean Greeff, GitHub - https://github.com/greeffjean
