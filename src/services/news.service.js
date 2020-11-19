@@ -1,4 +1,3 @@
-import newsApp from '../config';
 
 const apiKey = `defde18384ea44d1b5cb7f73809c12d9`;
 
