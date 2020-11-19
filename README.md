@@ -31,13 +31,14 @@ React.js
 News API.
 
 ## Versioning
-none
+`master`
+
 
 ## Authors
 Jean Greeff, GitHub - https://github.com/greeffjean
 
 ## License
-`master`
+none
 
 ## Acknowledgments
 This project was built in 2020, as an interview assessment.
