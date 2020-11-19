@@ -4,7 +4,7 @@ const apiKey = `${newsApp.apiKey}`;
 
 export function searchTitles(query, filter) {
 
-    var url = 'http://newsapi.org/v2/everything?' +
+    var url = 'https://newsapi.org/v2/everything?' +
         `q=${query}&` +
         `from=${filter}&` +
         'sortBy=popularity&' +
