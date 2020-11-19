@@ -4,7 +4,7 @@ const apiKey = `${newsApp.apiKey}`;
 
 export function searchTitles(query, filter) {
 
-    var url = 'https://newsapi.org/v2/everything?' +
+    var url = 'http://newsapi.org/v2/everything?' +
         `q=${query}&` +
         `from=${filter}&` +
         'sortBy=popularity&' +
@@ -13,7 +13,9 @@ export function searchTitles(query, filter) {
     return new Promise(resolve => {
         var req = new Request(url);
 
-        fetch(req)
+        fetch(req, { headers: {
+            Authorization: `Bearer ${apiKey}`
+          }})
             .then(response => {
                 console.log(response);
                 resolve(response.json())
@@ -24,5 +26,6 @@ export function searchTitles(query, filter) {
             })
     })
 }
+
 
 
