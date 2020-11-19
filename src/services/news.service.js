@@ -18,7 +18,9 @@ export function searchTitles(query, filter) {
         }
             );
 
-        fetch(req)
+        fetch(req, { headers: {
+            Authorization: `Bearer ${apiKey}`
+          }})
             .then(response => {
                 console.log(response);
                 resolve(response.json())
