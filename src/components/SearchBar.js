@@ -1,11 +1,14 @@
-import {
-    TextField,
-    Button
-} from '@material-ui/core'
+
 import { useHistory } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { useAppContext } from '../libs/useContext'
 import { searchTitles } from '../services/news.service'
+import {
+    TextField,
+    Button
+} from '@material-ui/core'
+
+
 
 function SearchBar() {
 
@@ -19,10 +22,11 @@ function SearchBar() {
     });
 
 
+    // Page Refreshes
     useEffect(() => {
-
         if (history.location.state) {
-            handleLoad()
+
+            handleLoad();
 
             searchTitles(
                 history.location.state.params.input,
@@ -33,28 +37,28 @@ function SearchBar() {
                     loading: false,
                     error: response.message ? response.message : null,
                     userHasSearched: mainState.userHasSearched
-                })
+                });
             }).catch(error => {
-                console.log(error)
-            })
+                console.log(error);
+            });
 
 
             setSearchState({
                 searchButton: false,
                 input: "",
                 filterDate: ""
-            })
+            });
         }
         else {
             history.push({
                 pathname: `/`,
             });
-        }
+        };
     }, [])
 
 
 
-    // URL Navigation
+    // Routing
     window.onpopstate = () => {
 
         if (history.location.pathname == "/") {
@@ -63,7 +67,7 @@ function SearchBar() {
                 loading: false,
                 error: null,
                 userHasSearched: false
-            })
+            });
         }
         else {
 
@@ -78,19 +82,20 @@ function SearchBar() {
                     loading: false,
                     error: response.message ? response.message : null,
                     userHasSearched: true
-                })
+                });
             }).catch(error => {
                 console.log(error)
-            })
+            });
 
             setSearchState({
                 searchButton: false,
                 input: "",
                 filterDate: ""
-            })
-        }
+            });
+        };
 
-    }
+    };
+
 
 
     // Handle Change
@@ -98,14 +103,14 @@ function SearchBar() {
         const updateInputs = {
             ...searchState,
             [event.target.attributes.name.nodeValue]: event.target.value
-        }
+        };
 
         setSearchState({
             searchButton: event.target.value ? true : false,
             input: updateInputs.input,
             filterDate: updateInputs.filterDate
-        })
-    }
+        });
+    };
 
 
 
@@ -116,15 +121,15 @@ function SearchBar() {
             loading: true,
             error: null,
             userHasSearched: true
-        })
-    }
+        });
+    };
 
 
 
     // Handle Submit
     function handleSubmit(e, term) {
 
-        handleLoad()
+        handleLoad();
 
         searchTitles(term ? term : searchState.input, searchState.filterDate).then(response => {
             console.log(response)
@@ -142,17 +147,17 @@ function SearchBar() {
                 loading: false,
                 error: response.message ? response.message : null,
                 userHasSearched: true
-            })
+            });
         }).catch(error => {
             console.log(error)
-        })
+        });
 
         setSearchState({
             searchButton: false,
             input: "",
             filterDate: ""
-        })
-    }
+        });
+    };
 
     return (
 
@@ -193,7 +198,6 @@ function SearchBar() {
                                 </Button>
                             </div>
                         }
-
                     </div>
                 </div>
             </div>
@@ -214,7 +218,6 @@ function SearchBar() {
                     >
                         FIFA Headlines</Button>
                 </div>
-
             }
         </div>
     )
