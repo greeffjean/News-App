@@ -120,8 +120,16 @@ class SearchBar extends Component {
      */
 
     componentDidMount() {
-        console.log(window.history)
+        console.log(window.location)
+        const state = window.history.state;
+
+        if (window.history.state) {
+            this.getRequest(state.input, state.filterDate);
+        };
+
     }
+
+
 
 
 
@@ -226,10 +234,12 @@ class SearchBar extends Component {
 
 
     render() {
+        const windowState = window.history.state;
+
         return (
 
             <div className="search-bar-wrapper">
-                <div className={this.props.userHasSearched ? "search-bar active" : "search-bar"}>
+                <div className={windowState ? "search-bar active" : "search-bar"}>
 
                     <div className="content-wrapper">
                         <div className="content-headings">
@@ -269,7 +279,7 @@ class SearchBar extends Component {
                     </div>
                 </div>
 
-                {!this.props.userHasSearched && !this.props.loading && 
+                {!this.props.userHasSearched && !this.props.loading &&
                     <div className="home-options">
                         <Button
                             onClick={(e) => this.handleSubmit({ term: "covid" })}

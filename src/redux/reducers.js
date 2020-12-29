@@ -11,7 +11,7 @@ import {
 
 const initialState = {
     articles: null,
-    loading: false,
+    loading: window.history.state ? true : false,
     error: null,
     searchButton: false,
     input: "",

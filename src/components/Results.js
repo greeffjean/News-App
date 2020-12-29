@@ -28,11 +28,13 @@ class Results extends Component {
     // const { this.props } = useAppContext()
 
     render() {
+        const windowState = window.history.state;
+
 
         return (
             <section>
                 {/* Loading */}
-                {this.props.loading &&
+                {this.props.loading && 
                     <div className="circular-progress">
                         <CircularProgress color="secondary" />
                     </div>
