@@ -1,36 +1,30 @@
-import logo from './logo.svg';
+
 import { useState } from 'react';
 import SearchBar from './components/SearchBar';
-import Routes from './components/Routes';
-import { useHistory } from 'react-router-dom'
-import { AppContext } from './libs/useContext';
+import Results from './components/Results';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import './App.css';
 
 
-
 function App() {
-  const history = useHistory();
+ // const history = useHistory();
   
   const [mainState, setMainState] = useState({
     articles: null,
     loading: false,
     error: null,
-    userHasSearched: history.location.state ? true : false
+  //  userHasSearched: history.location.state ? true : false
   })
 
 
   return (
-    <AppContext.Provider
-      value={{
-        mainState,
-        setMainState
-      }}
-    >
+    <Provider store={store} >
       <div className="App">
         <SearchBar />
-        <Routes />
+        <Results />
       </div>
-      </AppContext.Provider>
+      </Provider>
      
   );
 }
