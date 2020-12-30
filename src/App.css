@@ -10,7 +10,6 @@
 
 /* SearchBar */
 
-
 .search-bar {
   width: 100vw;
   border-radius: 5px;
@@ -34,6 +33,16 @@
 
 .search-bar.active .content-wrapper {
 margin-left: 10vw;
+}
+
+.content-wrapper {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.content-wrapper.loading {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .content-headings {

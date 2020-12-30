@@ -12,6 +12,8 @@ import {
     Card
 } from '@material-ui/core';
 
+
+// Redux Props
 const mapStateToProps = (state) => {
     return {
         articles: state.articles,
@@ -21,16 +23,12 @@ const mapStateToProps = (state) => {
         input: state.input,
         filterDate: state.filterDate,
     };
-}
+};
 
 
 class Results extends Component {
-    // const { this.props } = useAppContext()
 
     render() {
-        const windowState = window.history.state;
-
-
         return (
             <section>
                 {/* Loading */}
@@ -41,7 +39,7 @@ class Results extends Component {
                 }
 
                 {/* Error Feedback */}
-                {this.props.error &&
+                {this.props.error && !this.props.loading &&
                     <Alert severity="error">{this.props.error}</Alert>
                 }
 
@@ -87,8 +85,8 @@ class Results extends Component {
 
             </section>
         )
-    }
+    };
 
-}
+};
 
 export default connect(mapStateToProps)(Results)

@@ -6,12 +6,13 @@ import {
     INPUT,
     FILTER_DATE,
     RESET_INPUT,
-    HANDLE_SUBMIT
+    HANDLE_SUBMIT,
+    RESET_APP
 } from './actions';
 
 const initialState = {
     articles: null,
-    loading: window.history.state ? true : false,
+    loading: window.history.state ? true : false, // On page refreshes show loading circle until getRequest populates state
     error: null,
     searchButton: false,
     input: "",
@@ -64,6 +65,16 @@ const reducer = (state = initialState, action) => {
                 searchButton: false,
                 input: "",
                 filterDate: ""
+            };
+        case RESET_APP:
+            return {
+                articles: null,
+                loading: window.history.state ? true : false, // On page refreshes show loading circle until getRequest populates state
+                error: null,
+                searchButton: false,
+                input: "",
+                filterDate: "",
+                userHasSearched: false
             }
         default:
             return state;

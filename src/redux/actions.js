@@ -7,3 +7,4 @@ export const INPUT = "INPUT";
 export const FILTER_DATE = "FILTER_DATE";
 export const RESET_INPUT = "RESET_INPUT";
 export const HANDLE_SUBMIT = "HANDLE_SUBMIT";
+export const RESET_APP = "RESET_APP";

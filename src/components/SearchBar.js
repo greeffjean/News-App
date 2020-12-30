@@ -1,7 +1,4 @@
 
-import { useHistory } from 'react-router-dom'
-import { useState, useEffect } from 'react';
-import { useAppContext } from '../libs/useContext'
 import { searchTitles } from '../services/news.service';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
@@ -10,7 +7,7 @@ import {
     Button
 } from '@material-ui/core'
 
-
+// Redux Props
 const mapStateToProps = (state) => {
     return {
         articles: state.articles,
@@ -21,115 +18,56 @@ const mapStateToProps = (state) => {
         filterDate: state.filterDate,
         userHasSearched: state.userHasSearched
     };
-}
+};
 
 
 class SearchBar extends Component {
 
-    // const history = useHistory();
 
-    // const { props, setprops } = useAppContext();
-    /*
-    const [props, setprops] = useState({
-          searchButton: false,
-          input: "",
-          filterDate: ""
-      });
-  
-    */
-
-    // Page Refreshes
-    /*
-       useEffect(() => {
-        if (history.location.state) {
-
-            handleLoad();
-
-            searchTitles(
-                history.location.state.params.input,
-                history.location.state.params.filterDate
-            ).then(response => {
-                setprops({
-                    articles: response.articles ? response.articles : null,
-                    loading: false,
-                    error: response.message ? response.message : null,
-                    userHasSearched: props.userHasSearched
-                });
-            }).catch(error => {
-                console.log(error);
-            });
-
-
-            setprops({
-                searchButton: false,
-                input: "",
-                filterDate: ""
-            });
-        }
-        else {
-            history.push({
-                pathname: `/`,
-            });
+    componentDidMount() {
+        const state = window.history.state;
+        // Browser Refreshes
+        if (window.history.state) {
+            this.getRequest(state.input, state.filterDate);
         };
-    }, [])
-   
- 
-
-
-
-    // Routing
-    window.onpopstate = () => {
-
-        if (history.location.pathname == "/") {
-            setprops({
-                articles: null,
-                loading: false,
-                error: null,
-                userHasSearched: false
-            });
-        }
-        else {
-
-            handleLoad()
-
-            searchTitles(
-                history.location.state.params.input,
-                history.location.state.params.filterDate
-            ).then(response => {
-                setprops({
-                    articles: response.articles ? response.articles : null,
-                    loading: false,
-                    error: response.message ? response.message : null,
-                    userHasSearched: true
-                });
-            }).catch(error => {
-                console.log(error)
-            });
-
-            setprops({
-                searchButton: false,
-                input: "",
-                filterDate: ""
-            });
+        // Browser Back 
+        window.onpopstate = () => {
+            if (window.location.pathname == "/") {
+                this.resetApp()
+            }
+            else {
+                let pathParams = window.location.pathname.toString();
+                pathParams = pathParams.substring(1, pathParams.length);
+                const firstParam = pathParams.split("/", 1);
+                const secondParam = pathParams.split("/", 2);
+                this.getRequest(firstParam, secondParam)
+            };
         };
-
     };
 
 
 
-     */
+        // Handle Submit
+        handleSubmit(e) {
 
-    componentDidMount() {
-        console.log(window.location)
-        const state = window.history.state;
+            const {
+                input,
+                filterDate
+            } = this.props;
 
-        if (window.history.state) {
-            this.getRequest(state.input, state.filterDate);
+            const inputValue = e.term ? e.term : input;
+
+            // save state to Browser Window
+            window.history.pushState(
+                {
+                    input: inputValue,
+                    filterDate: filterDate
+                },
+                `/${inputValue}/${filterDate}`, `/${inputValue}/${filterDate}`
+            );
+            // API function
+            this.getRequest(inputValue, filterDate);
         };
-
-    }
-
-
 
 
 
@@ -142,15 +80,8 @@ class SearchBar extends Component {
                 filterDate: type == "date" ? event.target.value : this.props.filterDate,
             }
         });
-
-        /*
-        setprops({
-            searchButton: event.target.value ? true : false,
-            input: updateInputs.input,
-            filterDate: updateInputs.filterDate
-        });
-        */
     };
+
 
 
     // Handle Load
@@ -158,30 +89,15 @@ class SearchBar extends Component {
         this.props.dispatch({ type: "HANDLE_LOAD" });
     };
 
+
+
     // Get Request
     getRequest(inputValue, filterDate) {
-        searchTitles(inputValue, filterDate).then(response => {
-            console.log(response)
-            // save state to Browser Router
-            window.history.pushState(
-                {
-                    input: inputValue,
-                    filterDate: filterDate
-                },
-                `/${inputValue}/${filterDate}`, `/${inputValue}/${filterDate}`
-            )
-            /*
-                 this.props.history.push({
-                pathname: `/${inputValue}/${filterDate}`,
-                state: {
-                    params: {
-                        input: inputValue,
-                        filterDate: filterDate
-                    }
-                }
-            });
-            */
+        // load
+        this.handleLoad();
 
+        searchTitles(inputValue, filterDate).then(response => {
+            console.log(response);
             // redux function
             this.props.dispatch({
                 type: "HANDLE_SUBMIT",
@@ -189,59 +105,39 @@ class SearchBar extends Component {
                     articles: response.articles ? response.articles : null,
                     message: response.message,
                 }
-            })
+            });
             // reset input
             this.resetInput()
-            /*
-              setprops({
-                articles: response.articles ? response.articles : null,
-                loading: false,
-                error: response.message ? response.message : null,
-                userHasSearched: true
-            });
-            */
         }).catch(error => {
             console.log(error)
         });
-    }
-
-
-
-
-    // Handle Submit
-    handleSubmit(e) {
-
-        const {
-            input,
-            filterDate
-        } = this.props;
-
-        const inputValue = e.term ? e.term : input;
-
-        // load
-        this.handleLoad();
-        // API function
-        this.getRequest(inputValue, filterDate);
-
     };
+
+
+
+    // Reset App
+    resetApp() {
+        this.props.dispatch({ type: "RESET_APP" });
+    };
+
 
 
     // Reset Input Fields
     resetInput() {
-        this.props.dispatch({ type: "RESET_INPUT" })
-    }
+        this.props.dispatch({ type: "RESET_INPUT" });
+    };
 
 
 
     render() {
+
         const windowState = window.history.state;
 
         return (
-
             <div className="search-bar-wrapper">
                 <div className={windowState ? "search-bar active" : "search-bar"}>
 
-                    <div className="content-wrapper">
+                    <div className={this.props.loading ? "content-wrapper loading" : "content-wrapper"}>
                         <div className="content-headings">
                             <h1>Discover</h1><h2>Headlines</h2>
                         </div>

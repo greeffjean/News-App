@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchBar from './components/SearchBar';
 import Results from './components/Results';
 import { Provider } from 'react-redux';
@@ -16,7 +16,6 @@ function App() {
     error: null,
   //  userHasSearched: history.location.state ? true : false
   })
-
 
   return (
     <Provider store={store} >
