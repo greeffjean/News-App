@@ -25,49 +25,51 @@ class SearchBar extends Component {
 
 
     componentDidMount() {
+
         const state = window.history.state;
         // Browser Refreshes
         if (window.history.state) {
             this.getRequest(state.input, state.filterDate);
         };
-        // Browser Back 
+        // Browser Back and Forward
         window.onpopstate = () => {
-            if (window.location.pathname == "/") {
+            console.log(window.location)
+            if (window.location.search == "") {
                 this.resetApp()
             }
             else {
-                let pathParams = window.location.pathname.toString();
-                pathParams = pathParams.substring(1, pathParams.length);
-                const firstParam = pathParams.split("/", 1);
-                const secondParam = pathParams.split("/", 2);
-                this.getRequest(firstParam, secondParam)
+                let url = window.location.href;
+                let params = (new URL(url)).searchParams;
+                let input = params.get('input');
+                let date = params.get('date');
+                this.getRequest(input, date)
             };
         };
     };
 
 
 
-        // Handle Submit
-        handleSubmit(e) {
+    // Handle Submit
+    handleSubmit(e) {
 
-            const {
-                input,
-                filterDate
-            } = this.props;
+        const {
+            input,
+            filterDate
+        } = this.props;
 
-            const inputValue = e.term ? e.term : input;
+        const inputValue = e.term ? e.term : input;
 
-            // save state to Browser Window
-            window.history.pushState(
-                {
-                    input: inputValue,
-                    filterDate: filterDate
-                },
-                `/${inputValue}/${filterDate}`, `/${inputValue}/${filterDate}`
-            );
-            // API function
-            this.getRequest(inputValue, filterDate);
-        };
+        // save state to Browser Window
+        window.history.pushState(
+            {
+                input: inputValue,
+                filterDate: filterDate
+            },
+            `?input=${inputValue}&filterDate=${filterDate ? filterDate : "null"}`, `?input=${inputValue}&filterDate=${filterDate ? filterDate : "null"}`
+        );
+        // API function
+        this.getRequest(inputValue, filterDate);
+    };
 
 
 
@@ -93,10 +95,12 @@ class SearchBar extends Component {
 
     // Get Request
     getRequest(inputValue, filterDate) {
+
         // load
         this.handleLoad();
 
         searchTitles(inputValue, filterDate).then(response => {
+            console.log(this.props.loading)
             console.log(response);
             // redux function
             this.props.dispatch({

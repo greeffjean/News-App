@@ -32,7 +32,7 @@ class Results extends Component {
         return (
             <section>
                 {/* Loading */}
-                {this.props.loading && 
+                {this.props.loading &&
                     <div className="circular-progress">
                         <CircularProgress color="secondary" />
                     </div>
@@ -43,9 +43,14 @@ class Results extends Component {
                     <Alert severity="error">{this.props.error}</Alert>
                 }
 
+                  {/* Empty Results */}
+                  {this.props.articles && !this.props.articles.length &&
+                    <Alert severity="error">Your search results returned empty, check your date query</Alert>
+                }
+
 
                 {/* Articles */}
-                { this.props.articles && !this.props.loading &&
+                { this.props.articles && this.props.articles.length > 1 && !this.props.loading &&
 
                     <div className="articles-wrapper">
                         {

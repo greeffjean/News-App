@@ -12,7 +12,7 @@ import {
 
 const initialState = {
     articles: null,
-    loading: window.history.state ? true : false, // On page refreshes show loading circle until getRequest populates state
+    loading: false, // On page refreshes show loading circle until getRequest populates state
     error: null,
     searchButton: false,
     input: "",
@@ -41,6 +41,7 @@ const reducer = (state = initialState, action) => {
         case HANDLE_LOAD:
             return {
                 ...state,
+                userHasSearched: true,
                 loading: state.loading ? false : true,
             };
         case ERROR:
