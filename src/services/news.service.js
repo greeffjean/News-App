@@ -15,11 +15,13 @@ export function searchTitles(query, filter) {
                 Authorization: `Bearer ${apiKey}`
             }
         }
-            );
+        );
 
-        fetch(req, { headers: {
-            Authorization: `Bearer ${apiKey}`
-          }})
+        fetch(req, {
+            headers: {
+                Authorization: `Bearer ${apiKey}`
+            }
+        })
             .then(response => {
                 console.log(response);
                 resolve(response.json())
@@ -28,5 +30,5 @@ export function searchTitles(query, filter) {
                 resolve(response)
                 console.log(response)
             })
-    })
-}
+    });
+};

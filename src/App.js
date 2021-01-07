@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import Results from './components/Results';
 import { Provider } from 'react-redux';
@@ -8,24 +8,24 @@ import './App.css';
 
 
 function App() {
- // const history = useHistory();
-  
-  const [mainState, setMainState] = useState({
-    articles: null,
-    loading: false,
-    error: null,
-  //  userHasSearched: history.location.state ? true : false
-  })
 
   return (
-    <Provider store={store} >
-      <div className="App">
-        <SearchBar />
-        <Results />
-      </div>
+    <Router>
+      <Provider store={store} >
+        <div className="App">
+          <SearchBar />
+          <Switch>
+            <Route
+              path="/search"
+              render={(props) => (
+                <Results {...props} />
+              )}
+            />
+          </Switch>
+        </div>
       </Provider>
-     
+    </Router>
   );
-}
+};
 
 export default App;

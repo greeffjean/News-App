@@ -1,11 +1,12 @@
 
 import { searchTitles } from '../services/news.service';
+import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import {
     TextField,
     Button
-} from '@material-ui/core'
+} from '@material-ui/core';
 
 // Redux Props
 const mapStateToProps = (state) => {
@@ -23,9 +24,7 @@ const mapStateToProps = (state) => {
 
 class SearchBar extends Component {
 
-
     componentDidMount() {
-
         const state = window.history.state;
         // Browser Refreshes
         if (window.history.state) {
@@ -167,12 +166,20 @@ class SearchBar extends Component {
                                         }}
                                     />
 
-                                    <Button
+                                <Link
+                                    to={{
+                                        pathname: "/search",
+                                        search: `${this.props.input}&${this.props.filterDate}`,
+                                        state: {
+                                            input: this.props.input,
+                                            date: this.props.date
+                                        }
+                                    }}
                                         variant="contained"
                                         onClick={(e) => this.handleSubmit(e)}
                                     >
                                         Search
-                                </Button>
+                                </Link>
                                 </div>
                             }
                         </div>
